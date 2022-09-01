@@ -24,9 +24,9 @@ macro_rules! copy_yoke_impl {
             this
         }
         #[inline]
-        fn transform_mut<F>(&'a mut self, f: F)
+        fn transform_mut<F, R>(&'a mut self, f: F) -> R
         where
-            F: 'static + for<'b> FnOnce(&'b mut Self::Output),
+            F: 'static + for<'b> FnOnce(&'b mut Self::Output) -> R,
         {
             f(self)
         }
@@ -81,9 +81,9 @@ macro_rules! unsafe_complex_yoke_impl {
             ptr::read(ptr)
         }
 
-        fn transform_mut<F>(&'a mut self, f: F)
+        fn transform_mut<F, R>(&'a mut self, f: F) -> R
         where
-            F: 'static + for<'b> FnOnce(&'b mut Self::Output),
+            F: 'static + for<'b> FnOnce(&'b mut Self::Output) -> R,
         {
             // Cast away the lifetime of Self
             unsafe { f(mem::transmute::<&'a mut Self, &'a mut Self::Output>(self)) }

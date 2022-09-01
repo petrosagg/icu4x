@@ -20,7 +20,7 @@ Similar to how `dyn` enables Rust programs to perform "type erasure": turning co
  - It should be possible to manipulate the zero-copy deserialized data, not just read it (<span style="color:orange">**preferred**</span>)
  - It should be possible to conveniently use this abstraction without needing to write any unsafe code (<span style="color:orange">**preferred**</span>)
  - It would be nice if complicated lifetimes were not introduced at _any_ point (<span style="color:#729468">**optional**</span>)
- 
+
 
 ## High level design
 
@@ -133,8 +133,8 @@ pub unsafe trait Yokeable<'a>: 'static {
     fn transform(&'a self) -> &'a Self::Output;
     fn transform_owned(self) -> Self::Output;
     unsafe fn make(from: Self::Output) -> Self;
-    fn transform_mut<F>(&'a mut self, f: F)
-        where F: 'static + for<'b> FnOnce(&'b mut Self::Output);
+    fn transform_mut<F, R>(&'a mut self, f: F) -> R
+        where F: 'static + for<'b> FnOnce(&'b mut Self::Output) -> R;
 }
 ```
 

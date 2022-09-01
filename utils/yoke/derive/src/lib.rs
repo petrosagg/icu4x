@@ -75,9 +75,9 @@ fn yokeable_derive_impl(input: &DeriveInput) -> TokenStream2 {
                     this
                 }
                 #[inline]
-                fn transform_mut<F>(&'a mut self, f: F)
+                fn transform_mut<F, R>(&'a mut self, f: F) -> R
                 where
-                    F: 'static + for<'b> FnOnce(&'b mut Self::Output) {
+                    F: 'static + for<'b> FnOnce(&'b mut Self::Output) -> R {
                     f(self)
                 }
             }
@@ -172,9 +172,9 @@ fn yokeable_derive_impl(input: &DeriveInput) -> TokenStream2 {
                         ptr::read(ptr)
                     }
                     #[inline]
-                    fn transform_mut<F>(&'a mut self, f: F)
+                    fn transform_mut<F, R>(&'a mut self, f: F) -> R
                     where
-                        F: 'static + for<'b> FnOnce(&'b mut Self::Output) {
+                        F: 'static + for<'b> FnOnce(&'b mut Self::Output) -> R {
                         unsafe { f(core::mem::transmute::<&'a mut Self, &'a mut Self::Output>(self)) }
                     }
                 }
@@ -210,9 +210,9 @@ fn yokeable_derive_impl(input: &DeriveInput) -> TokenStream2 {
                     ptr::read(ptr)
                 }
                 #[inline]
-                fn transform_mut<F>(&'a mut self, f: F)
+                fn transform_mut<F, R>(&'a mut self, f: F) -> R
                 where
-                    F: 'static + for<'b> FnOnce(&'b mut Self::Output) {
+                    F: 'static + for<'b> FnOnce(&'b mut Self::Output) -> R {
                     unsafe { f(core::mem::transmute::<&'a mut Self, &'a mut Self::Output>(self)) }
                 }
             }

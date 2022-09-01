@@ -91,9 +91,9 @@
 //! #    unsafe fn make(from: Self::Output) -> Self {
 //! #        std::mem::transmute(from)
 //! #    }
-//! #    fn transform_mut<F>(&'a mut self, f: F)
+//! #    fn transform_mut<F, R>(&'a mut self, f: F) -> R
 //! #    where
-//! #        F: 'static + for<'b> FnOnce(&'b mut Self::Output),
+//! #        F: 'static + for<'b> FnOnce(&'b mut Self::Output) -> R,
 //! #    {
 //! #        unsafe {
 //! #            f(std::mem::transmute::<&'a mut Self, &'a mut Self::Output>(
@@ -151,9 +151,9 @@
 //! #    unsafe fn make(from: Self::Output) -> Self {
 //! #        std::mem::transmute(from)
 //! #    }
-//! #    fn transform_mut<F>(&'a mut self, f: F)
+//! #    fn transform_mut<F, R>(&'a mut self, f: F) -> R
 //! #    where
-//! #        F: 'static + for<'b> FnOnce(&'b mut Self::Output),
+//! #        F: 'static + for<'b> FnOnce(&'b mut Self::Output) -> R,
 //! #    {
 //! #        unsafe {
 //! #            f(std::mem::transmute::<&'a mut Self, &'a mut Self::Output>(
@@ -219,9 +219,9 @@
 //! #    unsafe fn make(from: Self::Output) -> Self {
 //! #        std::mem::transmute(from)
 //! #    }
-//! #    fn transform_mut<F>(&'a mut self, f: F)
+//! #    fn transform_mut<F, R>(&'a mut self, f: F) -> R
 //! #    where
-//! #        F: 'static + for<'b> FnOnce(&'b mut Self::Output),
+//! #        F: 'static + for<'b> FnOnce(&'b mut Self::Output) -> R,
 //! #    {
 //! #        unsafe {
 //! #            f(std::mem::transmute::<&'a mut Self, &'a mut Self::Output>(
